@@ -1,142 +1,83 @@
-import 'package:ceasar_cipher_app/views/decoding_view.dart';
-import 'package:ceasar_cipher_app/views/incoding_view.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyCustomForm extends StatefulWidget {
+  const MyCustomForm({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainView(),
-    );
+  State<MyCustomForm> createState() => _MyCustomFormState();
+}
+
+class _MyCustomFormState extends State<MyCustomForm> {
+  final myController = TextEditingController();
+  final shift = TextEditingController();
+  List arrayUnicode = [];
+  int toInt = 0;
+  int parse = 0;
+  int toThree = 0;
+  List<int> arraynew = [];
+  String cipher = '';
+  @override
+  void encount() {
+    // toUnicode = utf8.encode(myController.text).toString();
+    arrayUnicode = utf8.encode(myController.text); // text encode to utf8 type
+    for (int i = 0; i < arrayUnicode.length; i++) {
+      parse = int.parse(shift.text); // turn shift into integer
+      toThree = arrayUnicode[i] + parse; // add shift to unicode
+      arraynew.add(toThree); // new array with shifts
+    }
+
+    print(arrayUnicode);
+    print(arraynew);
+
+    cipher = utf8.decode(arraynew);
+
+    print(cipher);
   }
-}
 
-class MainView extends StatefulWidget {
-  const MainView({super.key});
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
 
-  @override
-  State<MainView> createState() => _MainViewState();
-}
+  void _incrementCounter() {
+    setState(() {
+      myController;
+    });
+  }
 
-class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Ceaser Cipher')),
-        backgroundColor: const Color(0xff6200EE),
+        title: const Text('Ceaser cipher'),
+        backgroundColor: Color(0xffB00020),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                icon: Icon(Icons.text_fields),
-                labelText: 'Type text',
-              ),
-              validator: (String? value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
+          children: [
+            TextField(
+              controller: myController,
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                icon: Icon(Icons.numbers_outlined),
-                labelText: 'How many shifts? ',
-              ),
-              validator: (String? value) {
-                return (value != null && value.contains('@'))
-                    ? 'Do not use the @ char.'
-                    : null;
-              },
+            SizedBox(height: 30),
+            TextField(
+              controller: shift,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff6200EE),
-                    fixedSize: const Size(100, 100),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  child: const Text(
-                    'Left',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff6200EE),
-                    fixedSize: const Size(100, 100),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  child: const Text(
-                    'Right',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DecodingView()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    fixedSize: const Size(150, 50),
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color(0xff6200EE),
-                      ),
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  child: const Text(
-                    'Encoding',
-                    style: TextStyle(fontSize: 20, color: Color(0xff6200EE)),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const IncodingView()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    fixedSize: const Size(150, 50),
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Color(0xff6200EE),
-                      ),
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                  ),
-                  child: const Text(
-                    'InCoding',
-                    style: TextStyle(fontSize: 20, color: Color(0xff6200EE)),
-                  ),
-                ),
-              ],
-            )
+            SizedBox(height: 30),
+            ElevatedButton(
+                onPressed: () {
+                  encount();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        content: Text('$cipher'),
+                      );
+                    },
+                  );
+                },
+                child: Text('Encoding'))
           ],
         ),
       ),

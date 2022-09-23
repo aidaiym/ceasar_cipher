@@ -1,10 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 class IncodingView extends StatefulWidget {
-  const IncodingView({super.key});
-
+  const IncodingView({super.key, required this.encodingText});
+  final String encodingText;
   @override
   State<IncodingView> createState() => _IncodingViewState();
+}
+
+var encoded = utf8.encode('Aidai');
+
+encodinMethod() {
+  var encoded = utf8.encode('Aidai');
 }
 
 class _IncodingViewState extends State<IncodingView> {
@@ -12,13 +20,11 @@ class _IncodingViewState extends State<IncodingView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Incoding'),
+        title: Text('$encoded'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text('answer'),
-        ],
+        children: [],
       ),
     );
   }
