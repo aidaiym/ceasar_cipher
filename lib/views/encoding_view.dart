@@ -3,14 +3,20 @@ import 'dart:convert';
 import 'package:ceasar_cipher_app/views/result_encoding.dart';
 import 'package:flutter/material.dart';
 
-class DecodingView extends StatefulWidget {
-  const DecodingView({super.key});
+class EncodingView extends StatefulWidget {
+  const EncodingView({super.key});
 
   @override
-  State<DecodingView> createState() => _DecodingViewState();
+  State<EncodingView> createState() => _EncodingViewState();
 }
 
-class _DecodingViewState extends State<DecodingView> {
+// var encoded = utf8.encode('Aidai');
+
+// encodinMethod() {
+//   var encoded = utf8.encode('Aidai');
+// }
+
+class _EncodingViewState extends State<EncodingView> {
   final myController = TextEditingController();
   final shift = TextEditingController();
   List arrayUnicode = [];
@@ -32,7 +38,7 @@ class _DecodingViewState extends State<DecodingView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Decoding ')),
+        title: const Center(child: Text('Encoding ')),
         backgroundColor: const Color(0xffB00020),
       ),
       body: Padding(
@@ -99,7 +105,7 @@ class _DecodingViewState extends State<DecodingView> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                encoding();
+                decoding();
               });
               Navigator.push(
                 context,
@@ -118,7 +124,7 @@ class _DecodingViewState extends State<DecodingView> {
                   side: const BorderSide(color: Colors.red),
                 )),
             child: const Text(
-              'Decoding',
+              'Encoding',
               style: TextStyle(color: Colors.red, fontSize: 17),
             ),
           ),
@@ -127,7 +133,7 @@ class _DecodingViewState extends State<DecodingView> {
     );
   }
 
-  void encoding() {
+  void decoding() {
     // toUnicode = utf8.encode(myController.text).toString();
     arrayUnicode = utf8.encode(myController.text); // text encode to utf8 type
     for (int i = 0; i < arrayUnicode.length; i++) {
@@ -157,8 +163,7 @@ class _DecodingViewState extends State<DecodingView> {
   }
 
 // encoding
-  void decoding() {
-    // ddd
+  void encoding() {
     // toUnicode = utf8.encode(myController.text).toString();
     arrayUnicode = utf8.encode(myController.text); // text encode to utf8 type
     for (int i = 0; i < arrayUnicode.length; i++) {
