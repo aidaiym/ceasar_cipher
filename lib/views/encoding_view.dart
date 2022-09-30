@@ -10,12 +10,6 @@ class EncodingView extends StatefulWidget {
   State<EncodingView> createState() => _EncodingViewState();
 }
 
-// var encoded = utf8.encode('Aidai');
-
-// encodinMethod() {
-//   var encoded = utf8.encode('Aidai');
-// }
-
 class _EncodingViewState extends State<EncodingView> {
   final myController = TextEditingController();
   final shift = TextEditingController();
@@ -45,21 +39,11 @@ class _EncodingViewState extends State<EncodingView> {
         padding: const EdgeInsets.all(16.0),
         child: Column(children: [
           TextField(
-            // onChanged: (value) {
-            //   setState(() {
-            //     myController.text = value.toString();
-            //   });
-            // },
             controller: myController,
           ),
           const SizedBox(height: 30),
           TextField(
             controller: shift,
-            // onChanged: (value) {
-            //   setState(() {
-            //     shift.text = value.toString();
-            //   });
-            // },
           ),
           const SizedBox(height: 30),
           Row(
@@ -105,14 +89,12 @@ class _EncodingViewState extends State<EncodingView> {
           ElevatedButton(
             onPressed: () {
               setState(() {
-                decoding();
+                encoding();
               });
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ResultEncoding(
-                          cipher: cipher,
-                        )),
+                    builder: (context) => ResultEncoding(cipher: cipher)),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -133,62 +115,26 @@ class _EncodingViewState extends State<EncodingView> {
     );
   }
 
-  void decoding() {
-    // toUnicode = utf8.encode(myController.text).toString();
-    arrayUnicode = utf8.encode(myController.text); // text encode to utf8 type
-    for (int i = 0; i < arrayUnicode.length; i++) {
-      if (left) {
-        print(left);
-        parse = int.parse(shift.text); // turn shift into integer
-        toThree = arrayUnicode[i] - parse; // add shift to unicode
-        arraynew.add(toThree); // new array with shifts
-      } else if (right) {
-        print(right);
-        parse = int.parse(shift.text); // turn shift into integer
-        toThree = arrayUnicode[i] + parse; // add shift to unicode
-        // arraynew[i] = toThree;
-        arraynew.add(toThree);
-        print('tothree $toThree');
-      }
-    }
-
-    // arraynew.add(toThree); // new array with shifts
-    setState(() {});
-    print(arrayUnicode);
-    // print(arraynew.add(toThree));
-    cipher = utf8.decode(arraynew);
-    arraynew.clear();
-
-    print(cipher);
-  }
-
-// encoding
   void encoding() {
-    // toUnicode = utf8.encode(myController.text).toString();
-    arrayUnicode = utf8.encode(myController.text); // text encode to utf8 type
+    arrayUnicode = utf8.encode(myController.text);
     for (int i = 0; i < arrayUnicode.length; i++) {
       if (left) {
-        print(left);
-        parse = int.parse(shift.text); // turn shift into integer
-        toThree = arrayUnicode[i] - parse; // add shift to unicode
-        arraynew.add(toThree); // new array with shifts
-      } else if (right) {
-        print(right);
-        parse = int.parse(shift.text); // turn shift into integer
-        toThree = arrayUnicode[i] + parse; // add shift to unicode
-        // arraynew[i] = toThree;
+        parse = int.parse(shift.text);
+        toThree = arrayUnicode[i] - parse;
         arraynew.add(toThree);
-        print('tothree $toThree');
+        if (arraynew[i] < 97) {
+          arraynew[i] = 122 - parse;
+        }
+      } else if (right) {
+        parse = int.parse(shift.text);
+        toThree = arrayUnicode[i] + parse;
+        arraynew.add(toThree);
+        if (arraynew[i] > 122) {
+          arraynew[i] = 96 + parse;
+        }
       }
     }
-
-    // arraynew.add(toThree); // new array with shifts
-    setState(() {});
-    print(arrayUnicode);
-    // print(arraynew.add(toThree));
     cipher = utf8.decode(arraynew);
     arraynew.clear();
-
-    print(cipher);
   }
 }

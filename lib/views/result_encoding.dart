@@ -12,10 +12,37 @@ class ResultEncoding extends StatelessWidget {
         backgroundColor: const Color(0xffB00020),
       ),
       body: Center(
-        child: Text(
-          'Encoded text:  $cipher',
-          style: TextStyle(fontSize: 30),
-        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+            'Encoded text:  $cipher',
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(height: 30),
+          TextButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('$cipher'),
+                  );
+                },
+              );
+            },
+            style: ElevatedButton.styleFrom(
+                fixedSize: const Size(160, 50),
+                elevation: 10,
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  side: const BorderSide(color: Colors.red),
+                )),
+            child: const Text(
+              'Decoding',
+              style: TextStyle(color: Colors.red, fontSize: 17),
+            ),
+          ),
+        ]),
       ),
     );
   }
